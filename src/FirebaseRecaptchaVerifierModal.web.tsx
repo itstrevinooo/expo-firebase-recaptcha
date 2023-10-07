@@ -1,8 +1,8 @@
-import firebase from 'firebase/compat/app';
-import 'firebase/compat/auth';
-import * as React from 'react';
+import firebase from "firebase/compat/app";
+import "firebase/compat/auth";
+import * as React from "react";
 
-import { FirebaseAuthApplicationVerifier } from './FirebaseRecaptcha.types';
+import { FirebaseAuthApplicationVerifier } from "./FirebaseRecaptcha.types";
 
 interface Props {
   attemptInvisibleVerification?: boolean;
@@ -24,7 +24,7 @@ class FirebaseRecaptchaVerifierModal extends React.Component<Props> {
         firebase.auth().languageCode = this.props.languageCode;
       }
       this.verifier = new firebase.auth.RecaptchaVerifier(ref, {
-        size: this.props.attemptInvisibleVerification ? 'invisible' : 'normal',
+        size: this.props.attemptInvisibleVerification ? "invisible" : "normal",
       });
     } else {
       this.verifier = null;
@@ -38,7 +38,8 @@ class FirebaseRecaptchaVerifierModal extends React.Component<Props> {
     return (
       this.props.appVerificationDisabledForTesting !==
         nextProps.appVerificationDisabledForTesting ||
-      this.props.attemptInvisibleVerification !== nextProps.attemptInvisibleVerification ||
+      this.props.attemptInvisibleVerification !==
+        nextProps.attemptInvisibleVerification ||
       this.props.languageCode !== nextProps.languageCode
     );
   }
@@ -52,23 +53,26 @@ class FirebaseRecaptchaVerifierModal extends React.Component<Props> {
   }
 
   render() {
-    const { attemptInvisibleVerification, appVerificationDisabledForTesting, languageCode } =
-      this.props;
+    const {
+      attemptInvisibleVerification,
+      appVerificationDisabledForTesting,
+      languageCode,
+    } = this.props;
     return (
       <div
         style={styles.container}
-        key={`${attemptInvisibleVerification ? 'invisible' : 'visible'}-${
-          appVerificationDisabledForTesting ? 'testing' : 'regular'
-        }-${languageCode ?? ''}`}
+        key={`${attemptInvisibleVerification ? "invisible" : "visible"}-${
+          appVerificationDisabledForTesting ? "testing" : "regular"
+        }-${languageCode ?? ""}`}
         id="recaptcha-container"
         ref={this.setRef}
-        dangerouslySetInnerHTML={{ __html: '' }}
+        dangerouslySetInnerHTML={{ __html: "" }}
       />
     );
   }
 }
 
-export default React.forwardRef((props: Omit<Props, 'innerRef'>, ref: any) => (
+export default React.forwardRef((props: Omit<Props, "innerRef">, ref: any) => (
   <FirebaseRecaptchaVerifierModal {...props} innerRef={ref} />
 ));
 

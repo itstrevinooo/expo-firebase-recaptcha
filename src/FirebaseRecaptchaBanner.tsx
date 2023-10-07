@@ -1,5 +1,13 @@
-import * as React from 'react';
-import { StyleSheet, View, Text, Linking, TextStyle, StyleProp, ViewProps } from 'react-native';
+import * as React from "react";
+import {
+  StyleSheet,
+  View,
+  Text,
+  Linking,
+  TextStyle,
+  StyleProp,
+  ViewProps,
+} from "react-native";
 
 interface Props extends ViewProps {
   textStyle?: StyleProp<TextStyle>;
@@ -14,13 +22,15 @@ export default function FirebaseRecaptchaBanner(props: Props) {
         This app is protected by reCAPTCHA and the Google
         <Text
           style={[styles.link, linkStyle]}
-          onPress={() => Linking.openURL('https://policies.google.com/privacy')}>
+          onPress={() => Linking.openURL("https://policies.google.com/privacy")}
+        >
           &nbsp;Privacy Policy&nbsp;
         </Text>
         and
         <Text
           style={[styles.link, linkStyle]}
-          onPress={() => Linking.openURL('https://policies.google.com/terms')}>
+          onPress={() => Linking.openURL("https://policies.google.com/terms")}
+        >
           &nbsp;Terms of Service&nbsp;
         </Text>
         apply.
@@ -38,6 +48,6 @@ const styles = StyleSheet.create({
     opacity: 0.5,
   },
   link: {
-    color: 'blue',
+    color: "blue",
   },
 });

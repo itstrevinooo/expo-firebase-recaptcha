@@ -1,1 +1,1 @@
-export { View as WebView } from 'react-native';
+export { View as WebView } from "react-native";

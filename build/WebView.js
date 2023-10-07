@@ -1,2 +1,2 @@
-export { WebView } from 'react-native-webview';
+export { WebView } from "react-native-webview";
 //# sourceMappingURL=WebView.js.map

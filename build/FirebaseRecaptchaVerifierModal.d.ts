@@ -1,7 +1,7 @@
-import * as React from 'react';
-import FirebaseRecaptcha from './FirebaseRecaptcha';
-import { FirebaseAuthApplicationVerifier } from './FirebaseRecaptcha.types';
-interface Props extends Omit<React.ComponentProps<typeof FirebaseRecaptcha>, 'onVerify' | 'invisible' | 'verify' | 'onVerify' | 'onLoad' | 'onError' | 'onFullChallenge'> {
+import * as React from "react";
+import FirebaseRecaptcha from "./FirebaseRecaptcha";
+import { FirebaseAuthApplicationVerifier } from "./FirebaseRecaptcha.types";
+interface Props extends Omit<React.ComponentProps<typeof FirebaseRecaptcha>, "onVerify" | "invisible" | "verify" | "onVerify" | "onLoad" | "onError" | "onFullChallenge"> {
     title?: string;
     cancelLabel?: string;
     attemptInvisibleVerification?: boolean;
@@ -35,7 +35,7 @@ export default class FirebaseRecaptchaVerifierModal extends React.Component<Prop
     private onVerify;
     cancel: () => void;
     onDismiss: () => void;
-    render(): JSX.Element;
+    render(): React.JSX.Element;
 }
 export {};
 //# sourceMappingURL=FirebaseRecaptchaVerifierModal.d.ts.map

@@ -1,9 +1,8 @@
-import { DEFAULT_WEB_APP_OPTIONS } from 'expo-firebase-core';
-import { CodedError } from 'expo-modules-core';
-import * as React from 'react';
-import { WebView } from './WebView';
+import { CodedError } from "expo-modules-core";
+import * as React from "react";
+import { WebView } from "./WebView";
 function getWebviewSource(firebaseConfig, firebaseVersion, appVerificationDisabledForTesting = false, languageCode, invisible) {
-    firebaseVersion = firebaseVersion || '8.0.0';
+    firebaseVersion = firebaseVersion || "8.0.0";
     return {
         baseUrl: `https://${firebaseConfig.authDomain}`,
         html: `
@@ -52,9 +51,9 @@ function getWebviewSource(firebaseConfig, firebaseVersion, appVerificationDisabl
         type: 'load'
       }));
       firebase.auth().settings.appVerificationDisabledForTesting = ${appVerificationDisabledForTesting};
-      ${languageCode ? `firebase.auth().languageCode = '${languageCode}';` : ''}
-      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("${invisible ? 'recaptcha-btn' : 'recaptcha-cont'}", {
-        size: "${invisible ? 'invisible' : 'normal'}",
+      ${languageCode ? `firebase.auth().languageCode = '${languageCode}';` : ""}
+      window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("${invisible ? "recaptcha-btn" : "recaptcha-cont"}", {
+        size: "${invisible ? "invisible" : "normal"}",
         callback: onVerify
       });
       window.recaptchaVerifier.render();
@@ -93,17 +92,17 @@ function getWebviewSource(firebaseConfig, firebaseVersion, appVerificationDisabl
       }
     });
   </script>
-  <script src="https://www.google.com/recaptcha/api.js?onload=onLoad&render=explicit&hl=${languageCode ?? ''}" onerror="onError()"></script>
+  <script src="https://www.google.com/recaptcha/api.js?onload=onLoad&render=explicit&hl=${languageCode ?? ""}" onerror="onError()"></script>
 </body></html>`,
     };
 }
 function validateFirebaseConfig(firebaseConfig) {
     if (!firebaseConfig) {
-        throw new CodedError('ERR_FIREBASE_RECAPTCHA_CONFIG', `Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`);
+        throw new CodedError("ERR_FIREBASE_RECAPTCHA_CONFIG", `Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`);
     }
     const { authDomain } = firebaseConfig;
     if (!authDomain) {
-        throw new CodedError('ERR_FIREBASE_RECAPTCHA_CONFIG', `Missing "authDomain" in firebase web configuration.`);
+        throw new CodedError("ERR_FIREBASE_RECAPTCHA_CONFIG", `Missing "authDomain" in firebase web configuration.`);
     }
 }
 export default function FirebaseRecaptcha(props) {
@@ -130,21 +129,21 @@ export default function FirebaseRecaptcha(props) {
     return (React.createElement(WebView, { ref: webview, javaScriptEnabled: true, automaticallyAdjustContentInsets: true, scalesPageToFit: true, mixedContentMode: "always", source: getWebviewSource(firebaseConfig, firebaseVersion, appVerificationDisabledForTesting, languageCode, invisible), onError: onError, onMessage: (event) => {
             const data = JSON.parse(event.nativeEvent.data);
             switch (data.type) {
-                case 'load':
+                case "load":
                     if (onLoad) {
                         setLoaded(true);
                         onLoad();
                     }
                     break;
-                case 'error':
+                case "error":
                     if (onError) {
                         onError();
                     }
                     break;
-                case 'verify':
+                case "verify":
                     onVerify(data.token);
                     break;
-                case 'fullChallenge':
+                case "fullChallenge":
                     if (onFullChallenge) {
                         onFullChallenge();
                     }
@@ -152,7 +151,4 @@ export default function FirebaseRecaptcha(props) {
             }
         }, ...otherProps }));
 }
-FirebaseRecaptcha.defaultProps = {
-    firebaseConfig: DEFAULT_WEB_APP_OPTIONS,
-};
 //# sourceMappingURL=FirebaseRecaptcha.js.map

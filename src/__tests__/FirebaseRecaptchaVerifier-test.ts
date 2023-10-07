@@ -1,6 +1,6 @@
-import FirebaseRecaptchaVerifier from '../FirebaseRecaptchaVerifier';
+import FirebaseRecaptchaVerifier from "../FirebaseRecaptchaVerifier";
 
-const token = '123456789';
+const token = "123456789";
 
 /* More tests are in test-suite */
 
@@ -11,7 +11,7 @@ it(`constructs`, async () => {
 
 it(`returns type "recaptcha"`, async () => {
   const verifier = new FirebaseRecaptchaVerifier(token);
-  expect(verifier.type).toBe('recaptcha');
+  expect(verifier.type).toBe("recaptcha");
 });
 
 it(`returns valid token`, async () => {

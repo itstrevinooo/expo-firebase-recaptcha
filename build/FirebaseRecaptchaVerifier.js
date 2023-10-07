@@ -6,7 +6,7 @@ export default class FirebaseRecaptchaVerifier {
         this.token = token;
     }
     get type() {
-        return 'recaptcha';
+        return "recaptcha";
     }
     async verify() {
         return this.token;

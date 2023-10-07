@@ -1,5 +1,5 @@
-import { CodedError } from 'expo-modules-core';
-import * as React from 'react';
+import { CodedError } from "expo-modules-core";
+import * as React from "react";
 import {
   StyleSheet,
   Button,
@@ -8,15 +8,21 @@ import {
   Text,
   Modal,
   ActivityIndicator,
-} from 'react-native';
+} from "react-native";
 
-import FirebaseRecaptcha from './FirebaseRecaptcha';
-import { FirebaseAuthApplicationVerifier } from './FirebaseRecaptcha.types';
+import FirebaseRecaptcha from "./FirebaseRecaptcha";
+import { FirebaseAuthApplicationVerifier } from "./FirebaseRecaptcha.types";
 
 interface Props
   extends Omit<
     React.ComponentProps<typeof FirebaseRecaptcha>,
-    'onVerify' | 'invisible' | 'verify' | 'onVerify' | 'onLoad' | 'onError' | 'onFullChallenge'
+    | "onVerify"
+    | "invisible"
+    | "verify"
+    | "onVerify"
+    | "onLoad"
+    | "onError"
+    | "onFullChallenge"
   > {
   title?: string;
   cancelLabel?: string;
@@ -37,8 +43,8 @@ export default class FirebaseRecaptchaVerifierModal
   implements FirebaseAuthApplicationVerifier
 {
   static defaultProps = {
-    title: 'reCAPTCHA',
-    cancelLabel: 'Cancel',
+    title: "reCAPTCHA",
+    cancelLabel: "Cancel",
   };
 
   state: State = {
@@ -62,7 +68,7 @@ export default class FirebaseRecaptchaVerifierModal
   }
 
   get type(): string {
-    return 'recaptcha';
+    return "recaptcha";
   }
 
   async verify(): Promise<string> {
@@ -109,7 +115,12 @@ export default class FirebaseRecaptchaVerifierModal
   private onError = () => {
     const { reject } = this.state;
     if (reject) {
-      reject(new CodedError('ERR_FIREBASE_RECAPTCHA_ERROR', 'Failed to load reCAPTCHA'));
+      reject(
+        new CodedError(
+          "ERR_FIREBASE_RECAPTCHA_ERROR",
+          "Failed to load reCAPTCHA",
+        ),
+      );
     }
     this.setState({
       visible: false,
@@ -133,7 +144,9 @@ export default class FirebaseRecaptchaVerifierModal
   cancel = () => {
     const { reject } = this.state;
     if (reject) {
-      reject(new CodedError('ERR_FIREBASE_RECAPTCHA_CANCEL', 'Cancelled by user'));
+      reject(
+        new CodedError("ERR_FIREBASE_RECAPTCHA_CANCEL", "Cancelled by user"),
+      );
     }
     this.setState({
       visible: false,
@@ -151,8 +164,15 @@ export default class FirebaseRecaptchaVerifierModal
   };
 
   render() {
-    const { title, cancelLabel, attemptInvisibleVerification, ...otherProps } = this.props;
-    const { visible, visibleLoaded, invisibleLoaded, invisibleVerify, invisibleKey } = this.state;
+    const { title, cancelLabel, attemptInvisibleVerification, ...otherProps } =
+      this.props;
+    const {
+      visible,
+      visibleLoaded,
+      invisibleLoaded,
+      invisibleVerify,
+      invisibleKey,
+    } = this.state;
     return (
       <View style={styles.container}>
         {attemptInvisibleVerification && (
@@ -173,13 +193,17 @@ export default class FirebaseRecaptchaVerifierModal
           animationType="slide"
           presentationStyle="pageSheet"
           onRequestClose={this.cancel}
-          onDismiss={this.onDismiss}>
+          onDismiss={this.onDismiss}
+        >
           <SafeAreaView style={styles.modalContainer}>
             <View style={styles.header}>
               <Text style={styles.title}>{title}</Text>
               <View style={styles.cancel}>
                 <Button
-                  title={cancelLabel || FirebaseRecaptchaVerifierModal.defaultProps.cancelLabel}
+                  title={
+                    cancelLabel ||
+                    FirebaseRecaptchaVerifierModal.defaultProps.cancelLabel
+                  }
                   onPress={this.cancel}
                 />
               </View>
@@ -218,21 +242,21 @@ const styles = StyleSheet.create({
     flex: 1,
   },
   header: {
-    backgroundColor: '#FBFBFB',
+    backgroundColor: "#FBFBFB",
     height: 44,
-    flexDirection: 'row',
-    justifyContent: 'center',
-    alignItems: 'center',
-    borderBottomColor: '#CECECE',
+    flexDirection: "row",
+    justifyContent: "center",
+    alignItems: "center",
+    borderBottomColor: "#CECECE",
     borderBottomWidth: StyleSheet.hairlineWidth,
   },
   cancel: {
-    position: 'absolute',
+    position: "absolute",
     left: 8,
-    justifyContent: 'center',
+    justifyContent: "center",
   },
   title: {
-    fontWeight: 'bold',
+    fontWeight: "bold",
   },
   content: {
     flex: 1,
@@ -240,7 +264,7 @@ const styles = StyleSheet.create({
   loader: {
     ...StyleSheet.absoluteFillObject,
     paddingTop: 20,
-    justifyContent: 'flex-start',
-    alignItems: 'center',
+    justifyContent: "flex-start",
+    alignItems: "center",
   },
 });

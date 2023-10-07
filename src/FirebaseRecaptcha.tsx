@@ -1,8 +1,8 @@
-import { DEFAULT_WEB_APP_OPTIONS, FirebaseOptions } from 'expo-firebase-core';
-import { CodedError } from 'expo-modules-core';
-import * as React from 'react';
+import { CodedError } from "expo-modules-core";
+import { FirebaseOptions } from "firebase/app";
+import * as React from "react";
 
-import { WebView } from './WebView';
+import { WebView } from "./WebView";
 
 interface Props extends React.ComponentProps<typeof WebView> {
   firebaseConfig?: FirebaseOptions;
@@ -22,9 +22,9 @@ function getWebviewSource(
   firebaseVersion?: string,
   appVerificationDisabledForTesting: boolean = false,
   languageCode?: string,
-  invisible?: boolean
+  invisible?: boolean,
 ) {
-  firebaseVersion = firebaseVersion || '8.0.0';
+  firebaseVersion = firebaseVersion || "8.0.0";
   return {
     baseUrl: `https://${firebaseConfig.authDomain}`,
     html: `
@@ -35,7 +35,9 @@ function getWebviewSource(
   <meta name="HandheldFriendly" content="true">
   <script src="https://www.gstatic.com/firebasejs/${firebaseVersion}/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/${firebaseVersion}/firebase-auth.js"></script>
-  <script type="text/javascript">firebase.initializeApp(${JSON.stringify(firebaseConfig)});</script>
+  <script type="text/javascript">firebase.initializeApp(${JSON.stringify(
+    firebaseConfig,
+  )});</script>
   <style>
     html, body {
       height: 100%;
@@ -75,11 +77,11 @@ function getWebviewSource(
         type: 'load'
       }));
       firebase.auth().settings.appVerificationDisabledForTesting = ${appVerificationDisabledForTesting};
-      ${languageCode ? `firebase.auth().languageCode = '${languageCode}';` : ''}
+      ${languageCode ? `firebase.auth().languageCode = '${languageCode}';` : ""}
       window.recaptchaVerifier = new firebase.auth.RecaptchaVerifier("${
-        invisible ? 'recaptcha-btn' : 'recaptcha-cont'
+        invisible ? "recaptcha-btn" : "recaptcha-cont"
       }", {
-        size: "${invisible ? 'invisible' : 'normal'}",
+        size: "${invisible ? "invisible" : "normal"}",
         callback: onVerify
       });
       window.recaptchaVerifier.render();
@@ -119,7 +121,7 @@ function getWebviewSource(
     });
   </script>
   <script src="https://www.google.com/recaptcha/api.js?onload=onLoad&render=explicit&hl=${
-    languageCode ?? ''
+    languageCode ?? ""
   }" onerror="onError()"></script>
 </body></html>`,
   };
@@ -128,15 +130,15 @@ function getWebviewSource(
 function validateFirebaseConfig(firebaseConfig?: FirebaseOptions) {
   if (!firebaseConfig) {
     throw new CodedError(
-      'ERR_FIREBASE_RECAPTCHA_CONFIG',
-      `Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`
+      "ERR_FIREBASE_RECAPTCHA_CONFIG",
+      `Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`,
     );
   }
   const { authDomain } = firebaseConfig;
   if (!authDomain) {
     throw new CodedError(
-      'ERR_FIREBASE_RECAPTCHA_CONFIG',
-      `Missing "authDomain" in firebase web configuration.`
+      "ERR_FIREBASE_RECAPTCHA_CONFIG",
+      `Missing "authDomain" in firebase web configuration.`,
     );
   }
 }
@@ -172,7 +174,7 @@ export default function FirebaseRecaptcha(props: Props) {
   validateFirebaseConfig(firebaseConfig);
   if (!firebaseConfig) {
     console.error(
-      `FirebaseRecaptcha: Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`
+      `FirebaseRecaptcha: Missing firebase web configuration. Please set the "expo.web.config.firebase" field in "app.json" or use the "firebaseConfig" prop.`,
     );
     return null;
   }
@@ -188,27 +190,27 @@ export default function FirebaseRecaptcha(props: Props) {
         firebaseVersion,
         appVerificationDisabledForTesting,
         languageCode,
-        invisible
+        invisible,
       )}
       onError={onError}
       onMessage={(event) => {
         const data = JSON.parse(event.nativeEvent.data);
         switch (data.type) {
-          case 'load':
+          case "load":
             if (onLoad) {
               setLoaded(true);
               onLoad();
             }
             break;
-          case 'error':
+          case "error":
             if (onError) {
               onError();
             }
             break;
-          case 'verify':
+          case "verify":
             onVerify(data.token);
             break;
-          case 'fullChallenge':
+          case "fullChallenge":
             if (onFullChallenge) {
               onFullChallenge();
             }
@@ -219,7 +221,3 @@ export default function FirebaseRecaptcha(props: Props) {
     />
   );
 }
-
-FirebaseRecaptcha.defaultProps = {
-  firebaseConfig: DEFAULT_WEB_APP_OPTIONS,
-};

@@ -34,17 +34,17 @@
   "homepage": "https://docs.expo.dev/versions/latest/sdk/firebase-recaptcha/",
   "devDependencies": {
     "@testing-library/react": "10.4.3",
-    "expo-module-scripts": "^3.0.0"
-  },
-  "dependencies": {
-    "expo-firebase-core": "~6.0.0"
-  },
-  "peerDependencies": {
-    "react-native-webview": "*"
+    "expo-module-scripts": "^3.1.0",
+    "firebase": "^10.4.0",
+    "react-native-webview": "13.6.2"
   },
   "peerDependenciesMeta": {
     "react-native-webview": {
       "optional": true
     }
+  },
+  "dependencies": {
+    "expo-modules-core": "^1.5.11",
+    "react": "^18.2.0"
   }
 }

@@ -1,4 +1,4 @@
-import { FirebaseAuthApplicationVerifier } from './FirebaseRecaptcha.types';
+import { FirebaseAuthApplicationVerifier } from "./FirebaseRecaptcha.types";
 export default class FirebaseRecaptchaVerifier implements FirebaseAuthApplicationVerifier {
     private token;
     constructor(token: string);
